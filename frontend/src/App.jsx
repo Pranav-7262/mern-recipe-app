@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import AddRecipe from "./pages/AddRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import EditRecipe from "./pages/EditRecipe";
+import MyRecipes from "./pages/MyRecipes";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/add-recipe" element={<AddRecipe />} />
         <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+        <Route path="/my-recipes" element={<MyRecipes />} />
       </Routes>
     </AuthProvider>
   );
