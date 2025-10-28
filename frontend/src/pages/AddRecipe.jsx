@@ -46,7 +46,7 @@ const AddRecipe = () => {
       formData.ingredients[formData.ingredients.length - 1];
     if (lastIngredient.trim() !== "") {
       seterror("");
-      handleInputChange("ingredients", [...formData.ingredients, ""]);
+      handleInputChange("ingredients", [...formData.ingredients, ""]); //if last ingredient is not empty, we add a new empty ingredient
     } else {
       seterror("Please fill in the last ingredient before adding a new one");
     }
@@ -58,7 +58,7 @@ const AddRecipe = () => {
     try {
       await axios.post("/api/recipes", {
         title: formData.title,
-        ingredients: formData.ingredients.filter((i) => i.trim() !== ""),
+        ingredients: formData.ingredients.filter((i) => i.trim() !== ""), //here we filter out any empty ingredients
         instructions: formData.instructions,
         category: formData.category,
         photoUrl: formData.photoUrl,
