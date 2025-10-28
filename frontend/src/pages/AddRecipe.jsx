@@ -74,111 +74,149 @@ const AddRecipe = () => {
     }
   };
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold">Add Recipe </h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-gray-700">Title</label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => handleInputChange("title", e.target.value)}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700">Ingredients</label>
-          {formData.ingredients.map((ingredient, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                value={ingredient}
-                onChange={(e) => handleIngredientChange(index, e.target.value)}
-                className="w-full p-2 border rounded"
-                placeholder={`Ingredient ${index + 1}`}
-                required
-              />
-              {formData.ingredients.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeIngredient(index)}
-                  className="ml-2 text-red-500 hover:text-red-700"
-                >
-                  Remove
-                </button>
-              )}
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-6">
+      <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-2xl border border-gray-100">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          🍽️ Add a New Recipe
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Title
+            </label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => handleInputChange("title", e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              placeholder="e.g., Spaghetti Carbonara"
+              required
+            />
+          </div>
+
+          {/* Ingredients */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Ingredients
+            </label>
+            <div className="space-y-2">
+              {formData.ingredients.map((ingredient, index) => (
+                <div key={index} className="flex gap-2">
+                  <input
+                    type="text"
+                    value={ingredient}
+                    onChange={(e) =>
+                      handleIngredientChange(index, e.target.value)
+                    }
+                    className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    placeholder={`Ingredient ${index + 1}`}
+                    required
+                  />
+                  {formData.ingredients.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeIngredient(index)}
+                      className="text-red-500 hover:text-red-700 transition"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
+            <button
+              type="button"
+              onClick={addIngredient}
+              className="mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition"
+            >
+              + Add Ingredient
+            </button>
+          </div>
+
+          {/* Instructions */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Instructions
+            </label>
+            <textarea
+              value={formData.instructions}
+              onChange={(e) =>
+                handleInputChange("instructions", e.target.value)
+              }
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              rows="4"
+              placeholder="Step-by-step cooking instructions..."
+              required
+            />
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Category
+            </label>
+            <select
+              onChange={(e) => handleInputChange("category", e.target.value)}
+              value={formData.category}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none bg-white"
+              required
+            >
+              <option value="" disabled>
+                Select Category
+              </option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Dessert">Dessert</option>
+              <option value="Snack">Snack</option>
+            </select>
+          </div>
+
+          {/* Cooking Time */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Cooking Time (minutes)
+            </label>
+            <input
+              type="number"
+              value={formData.cookingTime}
+              onChange={(e) => handleInputChange("cookingTime", e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              placeholder="e.g., 30"
+              required
+              min={0}
+            />
+          </div>
+
+          {/* Photo URL */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Photo URL
+            </label>
+            <input
+              type="text"
+              value={formData.photoUrl}
+              onChange={(e) => handleInputChange("photoUrl", e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              placeholder="https://example.com/photo.jpg"
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
           <button
-            type="button"
-            className="text-blue-500 hover:underline"
-            onClick={addIngredient}
+            className={`w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg font-semibold shadow-md transition transform hover:-translate-y-0.5 hover:shadow-lg ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading}
+            type="submit"
           >
-            Add Ingredient
+            {loading ? "Adding..." : "Add Recipe"}
           </button>
-        </div>
-        <div>
-          <label className="block text-gray-700">Instructions</label>
-          <textarea
-            type="text"
-            value={formData.instructions}
-            onChange={(e) => handleInputChange("instructions", e.target.value)}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700">Category</label>
-          <select
-            onChange={(e) => handleInputChange("category", e.target.value)}
-            value={formData.category}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="" disabled>
-              Select Category
-            </option>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Dessert">Dessert</option>
-            <option value="Snack">Snack</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-gray-700">Cooking Time (minutes) </label>
-          <input
-            type="number"
-            value={formData.cookingTime}
-            onChange={(e) => handleInputChange("cookingTime", e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder="e.g., 30"
-            required
-            min={0}
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700">Photo Url </label>
-          <input
-            type="text"
-            value={formData.photoUrl}
-            onChange={(e) => handleInputChange("photoUrl", e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder="url"
-            required
-          />
-        </div>
-        <button
-          className={`bg-blue-500 text-white p-2 rounded hover:bg-blue-600 ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={loading}
-          type="submit"
-        >
-          {loading ? "Adding..." : "Add Recipe"}
-        </button>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

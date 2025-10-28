@@ -86,7 +86,7 @@ const Navbar = () => {
         {menuOpen && (
           <div className="md:hidden mt-2 space-y-2 px-2 pb-4">
             <Link
-              to="/explore"
+              to="/"
               className="block text-gray-700 hover:text-blue-600 font-medium transition duration-300"
               onClick={() => setMenuOpen(false)}
             >
